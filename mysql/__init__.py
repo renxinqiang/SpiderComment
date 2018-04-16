@@ -71,6 +71,7 @@ class MySql:
             return False
         self.__exec(sql)
         self.__commit_sql()
+        return True
 
     # 更新
     def update_sql(self,sql=''):
@@ -78,6 +79,7 @@ class MySql:
             return False
         self.__exec(sql)
         self.__commit_sql()
+        return True
 
     # 删除操作
     def delete_sql(self,sql=''):
@@ -85,6 +87,7 @@ class MySql:
             return False
         self.__exec(sql)
         self.__commit_sql()
+        return True
 
 
     # 执行语句
