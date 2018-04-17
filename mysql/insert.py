@@ -1,11 +1,11 @@
 #!/usr/local/bin/pyhton3
 
-import mysql
+from mysql import MySql
 
-class Insert(mysql.MySql):
 
-    def insert(self,sql=''):
-        if sql is '':
+class Insert(MySql):
+
+    def insert(self, sql=''):
+        if not sql:
             return False
-        result = self.insert_sql(sql)
-        return result
+        return self.insert_sql(sql)

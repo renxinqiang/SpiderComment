@@ -29,16 +29,8 @@
 #     soup_nex = soup_source(content)
 #
 
-
-
-from mysql import select
-
-sql = "SELECT * FROM ifram_url";
-
-result = select.Select().result_one(sql)
-
-
-print(result)
-
+sql = []
+if not sql:
+    print(1)
 
 

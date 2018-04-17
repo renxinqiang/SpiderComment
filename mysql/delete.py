@@ -1,11 +1,11 @@
 #!/usr/local/bin/python3
 
-import mysql
+from mysql import MySql
 
-class Delete(mysql.MySql):
 
-    def delete(self,sql=''):
-        if sql is '':
+class Delete(MySql):
+
+    def delete(self, sql=''):
+        if not sql:
             return False
-        result = self.delete_sql(sql)
-        return result
+        return self.delete_sql(sql)

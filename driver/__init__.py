@@ -4,18 +4,12 @@ from selenium import webdriver
 
 class Driver:
 
-    __driver = None
+    driver = None
 
     def __init__(self):
-        if self.__driver is None:
-            self.__driver = webdriver.Firefox()
+        if self.driver is None:
+            self.driver = webdriver.Firefox()
         pass
 
-    # 页面源码
-    def page_result(self,url):
-        driver = self.__driver
-        driver.get(url)
-        content = driver.page_source
-        driver.close()
-        return content
-
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.driver.close()

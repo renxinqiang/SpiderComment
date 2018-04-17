@@ -26,7 +26,7 @@ class MySql:
 
     # 链接
     def __mysql_connect(self):
-        if self.__connect is '':
+        if not self.__connect:
             try:
                 self.__connect = pymysql.connect(self.__host, self.__user, self.__pass, self.__db)
                 self.__cursor = self.__connect.cursor()
@@ -36,7 +36,7 @@ class MySql:
 
     # 游标
     def __exec(self, sql=''):
-        if sql is '':
+        if not sql:
             return False
         try:
             self.__cursor.execute(sql)
@@ -46,28 +46,28 @@ class MySql:
 
     # 查找所有
     def find_all(self, sql=''):
-        if sql is '':
+        if not sql:
             return False
         cursor = self.__exec(sql)
         return cursor.fetchall()
 
     # 查找一个
     def find_one(self, sql=''):
-        if sql is '':
+        if not sql:
             return False
         cursor = self.__exec(sql)
         return cursor.fetchone()
 
     # 查找几个
     def find_mony(self, sql='', size=0):
-        if sql is '' or size is 0:
+        if not sql or size is 0:
             return False
         cursor = self.__exec(sql)
         return cursor.fetchmany(sql, size)
 
     # 插入
     def insert_sql(self,sql=''):
-        if sql is '':
+        if not sql:
             return False
         self.__exec(sql)
         self.__commit_sql()
@@ -75,7 +75,7 @@ class MySql:
 
     # 更新
     def update_sql(self,sql=''):
-        if sql is '':
+        if not sql:
             return False
         self.__exec(sql)
         self.__commit_sql()
@@ -83,7 +83,7 @@ class MySql:
 
     # 删除操作
     def delete_sql(self,sql=''):
-        if sql is '':
+        if not sql:
             return False
         self.__exec(sql)
         self.__commit_sql()

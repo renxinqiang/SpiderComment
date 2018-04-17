@@ -1,12 +1,11 @@
 #!/usr/local/bin/python3
 
-import mysql
+from mysql import MySql
 
 
-class Update(mysql.MySql):
+class Update(MySql):
 
     def update(self,sql=''):
-        if sql is '':
+        if not sql:
             return False
-        result = self.update_sql(sql)
-        return result
+        return self.update_sql(sql)

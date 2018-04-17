@@ -1,18 +1,16 @@
 #!/usr/local/bin/python3
 
-import mysql
+from mysql import MySql
 
 
-class Select(mysql.MySql):
+class Select(MySql):
 
     def result_all(self, sql=''):
-        if sql is '':
+        if not sql:
             return ''
-        result = self.find_all(sql)
-        return result
+        return self.find_all(sql)
 
     def result_one(self, sql=''):
-        if sql is '':
+        if not sql:
             return ''
-        result = self.find_one(sql)
-        return result
+        return self.find_one(sql)
