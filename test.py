@@ -29,8 +29,5 @@
 #     soup_nex = soup_source(content)
 #
 
-sql = []
-if not sql:
-    print(1)
 
 

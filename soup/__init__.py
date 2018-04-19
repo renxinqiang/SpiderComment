@@ -2,7 +2,11 @@
 
 from bs4 import BeautifulSoup
 
-def soup_result(html):
-    soup = BeautifulSoup(html,'lxml')
-    return soup
 
+class Soup:
+
+    soup_result = None
+
+    def __init__(self,html,type = 'lxml'):
+        self.soup_result = BeautifulSoup(html,type)
+        pass
