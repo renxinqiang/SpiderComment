@@ -9,6 +9,7 @@ class Base(Driver):
 
     # 页面源码
     def page_result(self, url):
+        self.get_url(url)
         return self.driver.page_source
 
     # 页面请求

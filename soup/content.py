@@ -1,16 +1,14 @@
 #!/usr/local/bin/python3
 
-from soup import Soup
 
-
-class Content(Soup):
+class Content():
 
     def string_con(self,ele):
         if not ele:
             return False
-        return self.soup_result.ele.string
+        return ele.string
 
     def get_text_con(self,ele):
         if not ele:
             return False
-        return self.soup_result.ele.get_text
+        return ele.get_text

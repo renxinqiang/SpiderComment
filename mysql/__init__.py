@@ -2,8 +2,9 @@
 
 
 import config
-import pymysql
 import log
+
+import pymysql
 
 
 class MySql:
@@ -12,6 +13,7 @@ class MySql:
     __pass = ''
     __db = ''
     __port = ''
+    __charset = ''
     __connect = ''
     __cursor = ''
 
@@ -21,6 +23,7 @@ class MySql:
         self.__pass = config.MYSQL['password']
         self.__db = config.MYSQL['db']
         self.__port = config.MYSQL['port']
+        self.__charset = config.MYSQL['charset']
         self.__mysql_connect()
         pass
 
@@ -28,7 +31,7 @@ class MySql:
     def __mysql_connect(self):
         if not self.__connect:
             try:
-                self.__connect = pymysql.connect(self.__host, self.__user, self.__pass, self.__db)
+                self.__connect = pymysql.connect(self.__host, self.__user, self.__pass, self.__db, charset = self.__charset)
                 self.__cursor = self.__connect.cursor()
             except:
                 log.Log().write_log(__class__, 'Connect MySql Faild!!!')

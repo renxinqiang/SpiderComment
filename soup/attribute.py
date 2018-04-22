@@ -1,19 +1,16 @@
 #!/usr/local/bin/python3
 
-from soup import Soup
-
-
-class Attribute(Soup):
+class Attribute():
 
     def name(self,ele):
         if not ele:
             return False
-        return self.soup_result.ele['name']
+        return ele['name']
 
     def class_name(self,ele):
         if not ele:
             return False
-        return self.soup_result.ele['class']
+        return ele['class']
 
     def get_attr(self,ele,attr):
         if not ele or not attr:

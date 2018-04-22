@@ -29,5 +29,8 @@
 #     soup_nex = soup_source(content)
 #
 
+from mysql import update
 
+sql = '''UPDATE comment SET user_id = 'renxinqiang' WHERE id = 1'''
 
+update.Update().update(sql)

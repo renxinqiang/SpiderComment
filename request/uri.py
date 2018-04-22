@@ -5,15 +5,21 @@ from request import Request
 
 class Uri(Request):
 
-    def get_url(self,url,param):
-        if not url or not param:
+    def get_url(self,url,param=None):
+        if not url:
             return False
-        return self.request.get(url,params=param)
+        if param != None:
+            return self.request.get(url,params=param)
+        else:
+            return self.request.get(url)
 
     def post_url(self,url,param):
-        if not url or not param:
+        if not url:
             return False
-        return self.request.post(url,params=param)
+        if param != None:
+            return self.request.post(url,params=param)
+        else:
+            return self.request.post(url)
 
     def option_url(self,url):
         if not url:
