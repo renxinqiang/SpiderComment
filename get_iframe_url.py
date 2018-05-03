@@ -19,7 +19,10 @@ class Get_iframe_url():
 
     __comment_host = 'http://comment.zol.com.cn'
 
-    def __init__(self,url):
+    __iframe_id = ''
+
+    def __init__(self,url,type):
+        self.__iframe_id = type
         self.__doc_url = url
         self.get_page_source()
         self.set_data()
@@ -31,8 +34,8 @@ class Get_iframe_url():
         driverOptions.set_headless()
         driver = webdriver.Firefox(firefox_options=driverOptions)
         driver.get(self.__doc_url)
-        driver.switch_to.frame('commentsiframe')
-        self.__comment_url = driver.find_element_by_css_selector('#comment-tab-hot .more-comments a').get_attribute('href')
+        driver.switch_to.frame(self.__iframe_id)
+        self.__comment_url = driver.find_element_by_css_selector('.more-comments a').get_attribute('href')
         driver.close()
         self.__page_source = content.Content().text(self.__comment_url, None)
         pass
@@ -61,4 +64,4 @@ class Get_iframe_url():
 
 
 if __name__ == '__main__':
-    Get_iframe_url('http://memory.zol.com.cn/686/6865890.html')
+    Get_iframe_url('http://mobile.zol.com.cn/684/6842718.html','commentsiframe')

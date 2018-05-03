@@ -9,3 +9,7 @@ class Content(uri.Uri):
     def text(self, url, param):
         self.__result = uri.Uri().get_url(url, param)
         return self.__result.content
+
+    def content(self, url, param):
+        self.__result = uri.Uri().get_url(url, param)
+        return self.__result.text

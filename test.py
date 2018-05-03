@@ -1,5 +1,7 @@
 #!/usr/local/bin/python3
 
-l = 0
-if l :
-    print(1)
+import urllib.parse
+url = 'http://mobile.zol.com.cn//684/6842468_1.html'
+
+
+print(url.find('slide'))
