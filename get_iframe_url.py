@@ -23,6 +23,7 @@ class Get_iframe_url():
         self.__doc_url = url
         self.get_page_source()
         self.set_data()
+        self.save_data()
         pass
 
     def get_page_source(self):
@@ -48,7 +49,15 @@ class Get_iframe_url():
             self.__put_data.append(self.__comment_host + href)
         # 将首页链接扔到列表中
         self.__put_data.append(self.__comment_url)
-        print(self.__put_data)
+        pass
+
+    def save_data(self):
+        data = self.__put_data
+        for x in data:
+            sql = "INSERT INTO iframe_url (iframe_url)" \
+                  "VALUES ('" + str(x) + "')"
+            insert.Insert().insert(sql)
+        pass
 
 
 if __name__ == '__main__':
