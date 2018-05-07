@@ -1,7 +1,5 @@
 #!/usr/local/bin/python3
 
-import urllib.parse
-url = 'http://mobile.zol.com.cn//684/6842468_1.html'
-
-
-print(url.find('slide'))
+for x in range(30):
+    url = 'http://dynamic.zol.com.cn/channel/index.php?c=Ajax_MobileData&a=MobileNews&callback=FuncAbstract.setHtml&cid=74&page=' + str(x+1)
+    print(url)

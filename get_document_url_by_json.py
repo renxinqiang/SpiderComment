@@ -2,11 +2,10 @@
 
 from request import content
 from mysql import insert
-import urllib.parse
 
 import json
 
-class Get_document_url():
+class Get_document_url_by_json():
     __json_url = ''
 
     def __init__(self, url):
@@ -37,4 +36,4 @@ if __name__ == '__main__':
         # url = 'http://dynamic.zol.com.cn/channel/index.php?c=Ajax_MobileData&a=MobileNews&callback=FuncAbstract.setHtml&cid=74&page=' + str(page)
         # url = 'http://dynamic.zol.com.cn/channel/index.php?c=Ajax_MobileData&a=MobileNews&callback=FuncAbstract.setHtml&cid=392&page=' + str(page)
         url = 'http://dynamic.zol.com.cn/channel/index.php?c=Ajax_MobileData&a=MobileNews&callback=FuncAbstract.setHtml&cid=357&page=' + str(page)
-        Get_document_url(url)
+        Get_document_url_by_json(url)
