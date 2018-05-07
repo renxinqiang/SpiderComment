@@ -32,5 +32,9 @@ class Get_document_url():
             pass
 
 if __name__ == '__main__':
-    Get_document_url(
-        'http://dynamic.zol.com.cn/channel/index.php?c=Ajax_MobileData&a=MobileNews&callback=FuncAbstract.setHtml&cid=74&page=30')
+    for x in range(30):
+        page = x + 1
+        # url = 'http://dynamic.zol.com.cn/channel/index.php?c=Ajax_MobileData&a=MobileNews&callback=FuncAbstract.setHtml&cid=74&page=' + str(page)
+        # url = 'http://dynamic.zol.com.cn/channel/index.php?c=Ajax_MobileData&a=MobileNews&callback=FuncAbstract.setHtml&cid=392&page=' + str(page)
+        url = 'http://dynamic.zol.com.cn/channel/index.php?c=Ajax_MobileData&a=MobileNews&callback=FuncAbstract.setHtml&cid=357&page=' + str(page)
+        Get_document_url(url)
