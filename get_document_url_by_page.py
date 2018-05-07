@@ -20,7 +20,7 @@ class Get_document_url_by_Page():
             return
         for i in a_list:
             url = i['href']
-            iframe_id = 'commentsiframe'
+            iframe_id = 'commentsiframe' 
             if url.find('slide') != -1:
                 iframe_id = 'commentsIframe'
 
