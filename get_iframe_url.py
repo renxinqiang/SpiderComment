@@ -5,6 +5,7 @@ from selenium import webdriver
 import soup.dom as dom
 import soup.attribute as attr
 from mysql import insert
+from mysql import select
 
 
 class Get_iframe_url():
@@ -57,6 +58,11 @@ class Get_iframe_url():
     def save_data(self):
         data = self.__put_data
         for x in data:
+            select_sql = "select * from iframe_url where iframe_url = '" + x + "'"
+            res = select.Select().find_one(select_sql)
+            if res:
+                continue
+
             sql = "INSERT INTO iframe_url (iframe_url)" \
                   "VALUES ('" + str(x) + "')"
             insert.Insert().insert(sql)
