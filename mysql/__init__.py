@@ -105,6 +105,6 @@ class MySql:
         return self
 
     # 关闭
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def close_connect(self):
         self.__cursor.close()
         self.__connect.close()

@@ -20,6 +20,9 @@ class Dom(Soup):
     def html(self):
         return self.soup_result.html
 
+    def script(self):
+        return self.soup_result.script
+
     def find_all(self,type,attr_str={}):
         if not attr_str or not type:
             return False

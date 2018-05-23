@@ -6,6 +6,7 @@ import soup.dom as dom
 import soup.attribute as attr
 from mysql import insert
 from mysql import select
+from mysql import update
 
 
 class Get_iframe_url():
@@ -22,23 +23,54 @@ class Get_iframe_url():
 
     __iframe_id = ''
 
-    def __init__(self,url,type):
+    __css = ''
+
+    def __init__(self,url,type,css='.more-comments a'):
         self.__iframe_id = type
         self.__doc_url = url
+        self.__css = css
         self.get_page_source()
         self.set_data()
         self.save_data()
         pass
 
     def get_page_source(self):
-        driverOptions = webdriver.FirefoxOptions()
-        driverOptions.set_headless()
-        driver = webdriver.Firefox(firefox_options=driverOptions)
-        driver.get(self.__doc_url)
-        driver.switch_to.frame(self.__iframe_id)
-        self.__comment_url = driver.find_element_by_css_selector('.more-comments a').get_attribute('href')
-        driver.close()
-        self.__page_source = content.Content().text(self.__comment_url, None)
+        if self.__iframe_id == 'commentsIframe':
+            driverOptions = webdriver.FirefoxOptions()
+            driverOptions.set_headless()
+            driver = webdriver.Firefox(firefox_options=driverOptions)
+            driver.get(self.__doc_url)
+            driver.switch_to.frame(self.__iframe_id)
+            self.__comment_url = driver.find_element_by_css_selector(self.__css).get_attribute('href')
+            driver.close()
+            self.__page_source = content.Content().text(self.__comment_url, None)
+        else:
+            data = content.Content().text(self.__doc_url, None)
+            i = dom.Dom(data).find_select('script')
+            url = None
+            for x in i:
+                x = str(x)
+                res = x.replace('\n','')
+                if 'comment.zol.com.cn' not in res:
+                    continue
+                k = res.split(' ')
+                for xx in k:
+                    if 'comment.zol.com.cn' in xx:
+                        url = xx.replace('"', '\'')
+                        url = url.replace('\'//', 'http://')
+                        url = url.replace('\';', '')
+                        url = url.replace('}', '')
+                        url = url.replace('\'', '')
+                        break
+            if not url:
+                return
+            iframe_url = content.Content().text(url, None)
+            iframe_url_more = dom.Dom(iframe_url).find_select(self.__css)
+            if not iframe_url_more:
+                return
+            iframe_url_first = iframe_url_more[0]
+            self.__comment_url = iframe_url_first['href']
+            self.__page_source = content.Content().text(self.__comment_url, None)
         pass
 
     def set_data(self):
@@ -66,8 +98,25 @@ class Get_iframe_url():
             sql = "INSERT INTO iframe_url (iframe_url)" \
                   "VALUES ('" + str(x) + "')"
             insert.Insert().insert(sql)
+            insert.Insert().close_connect()
+
+        update_sql = "UPDATE document_url SET is_used = 1 WHERE document_url = '" + self.__doc_url + "'"
+        update.Update().update(update_sql)
+        update.Update().close_connect()
         pass
 
 
 if __name__ == '__main__':
-    Get_iframe_url('http://mobile.zol.com.cn/684/6842718.html','commentsiframe')
+    sql = "select document_url,id,iframe_id from document_url where id > 29335  and is_used = 0"
+    res = select.Select().find_all(sql)
+    for x in res:
+        url = x[0]
+        iframe_id = x[2]
+        if iframe_id == 'commentsIframe':
+            continue
+        id = str(x[1])
+        print('id:' + id + 'url:' + url + '开始')
+        if id == '2307':
+            Get_iframe_url(url,iframe_id,'.detail-side-list .review-all')
+        else:
+            Get_iframe_url(url, iframe_id)
