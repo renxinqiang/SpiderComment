@@ -116,7 +116,6 @@ class Get_iframe_url():
 
 if __name__ == '__main__':
     sql = "select document_url,id,iframe_id from document_url where id > 6767 and is_used = 0"
-    # sql = "select document_url,id,iframe_id from document_url where document_url = 'http://mobile.zol.com.cn/645/6451596.html'"
     res = select.Select().find_all(sql)
     for x in res:
         url = x[0]
