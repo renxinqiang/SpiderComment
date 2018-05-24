@@ -106,16 +106,14 @@ class Get_iframe_url():
             sql = "INSERT INTO iframe_url (iframe_url)" \
                   "VALUES ('" + str(x) + "')"
             insert.Insert().insert(sql)
-            insert.Insert().close_connect()
 
         update_sql = "UPDATE document_url SET is_used = 1 WHERE document_url = '" + self.__doc_url + "'"
         update.Update().update(update_sql)
-        update.Update().close_connect()
         pass
 
 
 if __name__ == '__main__':
-    sql = "select document_url,id,iframe_id from document_url where id > 6767 and is_used = 0"
+    sql = "select document_url,id,iframe_id from document_url where is_used = 0"
     res = select.Select().find_all(sql)
     for x in res:
         url = x[0]
