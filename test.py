@@ -3,12 +3,11 @@
 from mysql import select
 from mysql import update
 
-sql = "select * from document_url where document_url like '//%'"
+sql = "select * from document_url where is_used = 0"
 
 list1 = select.Select().find_all(sql)
-print(list1)
-# for x in list1:
-#     id = x[0]
-#     url = 'http:'+x[1]
-#     up_sql = "update document_url set document_url = '" + url + "' where id = " + str(id)
-#     update.Update().update(up_sql)
+for x in list1:
+    id = x[0]
+    url = x[1].replace('slide/','').replace('_1','')
+    up_sql = "update document_url set document_url = '" + url + "',iframe_id = 'commentsiframe' where id = " + str(id)
+    update.Update().update(up_sql)

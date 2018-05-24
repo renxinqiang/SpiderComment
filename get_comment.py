@@ -61,7 +61,7 @@ class Comment_page():
         pass
 
 if __name__ == '__main__':
-    sql = 'SELECT iframe_url,id FROM iframe_url WHERE id > 1456 AND is_used = 0'
+    sql = 'SELECT iframe_url,id FROM iframe_url WHERE id > 17025 AND is_used = 0'
     res = select.Select().find_all(sql)
     for x in res:
         url = x[0]

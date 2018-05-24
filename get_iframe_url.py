@@ -41,27 +41,35 @@ class Get_iframe_url():
             driver = webdriver.Firefox(firefox_options=driverOptions)
             driver.get(self.__doc_url)
             driver.switch_to.frame(self.__iframe_id)
-            self.__comment_url = driver.find_element_by_css_selector(self.__css).get_attribute('href')
+            css_html = driver.find_element_by_css_selector(self.__css)
+            if not css_html:
+                driver.close()
+                return
+            self.__comment_url = css_html.get_attribute('href')
             driver.close()
             self.__page_source = content.Content().text(self.__comment_url, None)
         else:
             data = content.Content().text(self.__doc_url, None)
-            i = dom.Dom(data).find_select('script')
             url = None
-            for x in i:
-                x = str(x)
-                res = x.replace('\n','')
-                if 'comment.zol.com.cn' not in res:
-                    continue
-                k = res.split(' ')
-                for xx in k:
-                    if 'comment.zol.com.cn' in xx:
-                        url = xx.replace('"', '\'')
-                        url = url.replace('\'//', 'http://')
-                        url = url.replace('\';', '')
-                        url = url.replace('}', '')
-                        url = url.replace('\'', '')
-                        break
+            iframe = dom.Dom(data).find_select('iframe')
+            if iframe:
+                url = iframe[0]['src']
+            else:
+                i = dom.Dom(data).find_select('script')
+                for x in i:
+                    x = str(x)
+                    res = x.replace('\n','')
+                    if 'comment.zol.com.cn' not in res:
+                        continue
+                    k = res.split(' ')
+                    for xx in k:
+                        if 'comment.zol.com.cn' in xx:
+                            url = xx.replace('"', '\'')
+                            url = url.replace('\'//', 'http://')
+                            url = url.replace('\';', '')
+                            url = url.replace('}', '')
+                            url = url.replace('\'', '')
+                            break
             if not url:
                 return
             iframe_url = content.Content().text(url, None)
@@ -107,16 +115,17 @@ class Get_iframe_url():
 
 
 if __name__ == '__main__':
-    sql = "select document_url,id,iframe_id from document_url where id > 29335  and is_used = 0"
+    sql = "select document_url,id,iframe_id from document_url where id > 6767 and is_used = 0"
+    # sql = "select document_url,id,iframe_id from document_url where document_url = 'http://mobile.zol.com.cn/645/6451596.html'"
     res = select.Select().find_all(sql)
     for x in res:
         url = x[0]
         iframe_id = x[2]
-        if iframe_id == 'commentsIframe':
-            continue
+        # if iframe_id == 'commentsIframe':
+        #     continue
         id = str(x[1])
-        print('id:' + id + 'url:' + url + '开始')
-        if id == '2307':
+        print('id:' + id + 'url:' + url + 'iframe_id:' + iframe_id + '开始')
+        if id == '6792':
             Get_iframe_url(url,iframe_id,'.detail-side-list .review-all')
         else:
             Get_iframe_url(url, iframe_id)
